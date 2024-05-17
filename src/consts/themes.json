@@ -1,0 +1,14 @@
+{
+  "light": {
+    "name": "light",
+    "font": "#000",
+    "bg": "#FFF",
+    "border": ""
+  },
+  "dark": {
+    "name": "dark",
+    "font": "#FFF",
+    "bg": "hsl(209, 23%, 22%)",
+    "border": ""
+  }
+}

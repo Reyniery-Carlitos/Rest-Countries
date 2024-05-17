@@ -10,6 +10,7 @@ export const useCountries = defineStore('countries', () => {
   function findByName (country) {
     countries.value = data
     let filteredCountry = []
+
     if (country !== '') {
       filteredCountry = countries.value.filter(c => c.name.toLowerCase() === country.toLowerCase())
     } else {
@@ -26,13 +27,11 @@ export const useCountries = defineStore('countries', () => {
 
   function filterByRegion (region) {
     countries.value = data
-    const filteredCountries = countries.value.filter(c => c.region.toLowerCase() === region.toLowerCase())
-    countries.value = filteredCountries
+    countries.value = countries.value.filter(c => c.region.toLowerCase() === region.toLowerCase())
   }
 
   function selectCountry (countryName) {
-    const selectedCountry = countries.value.find(c => c.name.toLowerCase() === countryName.toLowerCase())
-    country.value = selectedCountry
+    country.value = countries.value.find(c => c.name.toLowerCase() === countryName.toLowerCase())
   }
 
   function notCountry () {

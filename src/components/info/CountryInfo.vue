@@ -3,40 +3,53 @@ import { storeToRefs } from "pinia";
 import { useCountries } from "../../stores/countries.js";
 
 import Back from "../buttons/Back.vue";
+import { useTheme } from "../../stores/theme.js";
 
 const store = useCountries();
+const themeStore = useTheme();
+
 const { country } = storeToRefs(store);
+const { currentTheme } = storeToRefs(themeStore);
 
 function handleClick(code) {
-  store.filterCountryByCode(code)
+  store.filterCountryByCode(code);
 }
 </script>
 
 <template>
-  <section class="w-5/6 flex flex-col gap-10 mt-10" v-if="country">
+  <section
+    class="w-5/6 flex flex-col gap-10 mt-10"
+    v-if="country"
+    :style="{ 'color': currentTheme.font }"
+  >
     <Back />
 
-    <div class="w-full grid justify-items-start lg:grid-cols-2 lg:gap-20 lg:place-items-center">
+    <div
+      class="w-full grid justify-items-start lg:grid-cols-2 lg:gap-20 lg:place-items-center"
+    >
       <img :src="country.flags.svg" class="w-full" alt="Flag Country image" />
 
       <div class="w-full">
         <header class="my-5 lg:my-1">
-          <h3 class="font-bold text-2xl"> {{ country.name }} </h3>
+          <h3 class="font-bold text-2xl">{{ country.name }}</h3>
         </header>
 
         <main class="grid gap-5 md:grid-cols-2">
           <div class="">
             <p class="font-semibold my-2">
-              Native name: <span class="font-normal"> {{ country.nativeName }} </span>
+              Native name:
+              <span class="font-normal"> {{ country.nativeName }} </span>
             </p>
             <p class="font-semibold my-2">
-              Population: <span class="font-normal"> {{ country.population }} </span>
+              Population:
+              <span class="font-normal"> {{ country.population }} </span>
             </p>
             <p class="font-semibold my-2">
               Region: <span class="font-normal"> {{ country.region }} </span>
             </p>
             <p class="font-semibold my-2">
-              Sub Region: <span class="font-normal"> {{ country.subregion }} </span>
+              Sub Region:
+              <span class="font-normal"> {{ country.subregion }} </span>
             </p>
             <p class="font-semibold my-2">
               Capital: <span class="font-normal"> {{ country.capital }} </span>
@@ -45,15 +58,25 @@ function handleClick(code) {
 
           <div>
             <p class="font-semibold my-2">
-              Top Level Domain: <span class="font-normal"> {{ country.topLevelDomain[0] }} </span>
+              Top Level Domain:
+              <span class="font-normal"> {{ country.topLevelDomain[0] }} </span>
             </p>
             <p class="font-semibold my-2">
-              Currencies: <span class="font-normal" v-for="currency of country.currencies"> {{ currency.name }} </span>
+              Currencies:
+              <span class="font-normal" v-for="currency of country.currencies">
+                {{ currency.name }}
+              </span>
             </p>
             <p class="font-semibold my-2">
               Languajes:
 
-              <span class="font-normal" v-for="language of country.languages" :key="language.name + language.nativeName"> {{ language.name }} </span>
+              <span
+                class="font-normal"
+                v-for="language of country.languages"
+                :key="language.name + language.nativeName"
+              >
+                {{ language.name }}
+              </span>
             </p>
           </div>
         </main>
@@ -63,7 +86,15 @@ function handleClick(code) {
         >
           <p class="text-xl font-medium">Border countries:</p>
           <ul class="flex gap-2 flex-wrap">
-            <li class="bg-white shadow-md w-32 text-center py-1 cursor-pointer" v-for="bc of country.borders" :key="bc" @click="handleClick(bc)"> {{ bc }} </li>
+            <li
+              class=" shadow-md w-32 text-center py-1 cursor-pointer"
+              :style="{ 'background-color': currentTheme.bg }"
+              v-for="bc of country.borders"
+              :key="bc"
+              @click="handleClick(bc)"
+            >
+              {{ bc }}
+            </li>
           </ul>
         </footer>
       </div>
